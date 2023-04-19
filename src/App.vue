@@ -1,44 +1,38 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { ref } from 'vue'
+import RoundRobin from '../src/components/RoundRobin.vue'
+import GameMessage from './components/GameMessage.vue'
+
+// アクティブプレイヤー
+const playerId = ref(1)
+
+// ボードの初期状態
+const initStates: Array<Array<number>> = [
+  [-1, -1, -1],
+  [-1, -1, -1],
+  [-1, -1, -1],
+]
+const states = ref(initStates)
+
+/**
+ * ボード選択
+ *
+ * @param rowsIndex 行番号
+ * @param colsIndex 列番号
+ */
+const onSelect = (rowsIndex: number, colsIndex: number) => {
+  let board = states.value
+  if (board[rowsIndex][colsIndex] == -1) {
+    board[rowsIndex][colsIndex] = Number(playerId.value)
+    playerId.value = Number(playerId.value) === 1 ? 2 : 1
+  } else {
+    alert('そのマスは、すでに選択されています！')
+  }
+  states.value = board
+}
 </script>
 
 <template>
-  <div>
-    <a
-      href="https://vitejs.dev"
-      target="_blank"
-    >
-      <img
-        src="/vite.svg"
-        class="logo"
-        alt="Vite logo"
-      >
-    </a>
-    <a
-      href="https://vuejs.org/"
-      target="_blank"
-    >
-      <img
-        src="./assets/vue.svg"
-        class="logo vue"
-        alt="Vue logo"
-      >
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <RoundRobin :states="states" @onSelect="onSelect" />
+  <GameMessage :playerId="playerId" />
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>

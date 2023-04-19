@@ -1,13 +1,28 @@
 env:
   browser: true
-  es2021: true
-extends:
-  - "plugin:vue/vue3-recommended"
-  - "eslint:recommended"
-  - "@vue/typescript/recommended"
+  es6: true
+  node: true
+parser: vue-eslint-parser
 parserOptions:
-  ecmaVersion: 12
+  parser: babel-eslint
+  ecmaVersion: 2020
+  sourceType: module
 plugins:
   - vue
-  - "@typescript-eslint"
-rules: {}
+  - prettier
+extends:
+  - eslint:recommended
+  - plugin:vue/recommended
+  - plugin:prettier/recommended
+  - prettier/vue
+rules:
+  prettier/prettier:
+    - error
+    - singleQuote: true
+      htmlWhitespaceSensitivity: ignore
+  vue/max-attributes-per-line:
+    - error
+    - singleline: 5
+      multiline:
+        max: 1
+        allowFirstLine: false
