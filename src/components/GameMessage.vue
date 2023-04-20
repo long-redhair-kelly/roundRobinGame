@@ -2,7 +2,9 @@
 import { defineProps } from 'vue'
 import '@/css/GameMessage.css'
 
-defineProps(['playerId'])
+defineProps({
+  playerId: Number,
+})
 </script>
 
 <template>
