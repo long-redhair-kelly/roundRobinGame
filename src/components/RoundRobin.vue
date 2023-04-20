@@ -1,6 +1,10 @@
 <script setup lang="ts">
+import { defineProps } from 'vue'
 import '@/css/RoundRobin.css'
-defineProps(['states'])
+defineProps({
+  states: Array<Array<number>>,
+})
+
 const emit = defineEmits(['onSelect', 'playerId'])
 const clickSelect = (rowIndex: number, colIndex: number) =>
   emit('onSelect', rowIndex, colIndex)
